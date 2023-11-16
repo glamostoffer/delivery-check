@@ -4,7 +4,13 @@ import (
 	"deliveryCheck/app"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/nats-io/nats.go"
+	"log"
 )
+
+func MessageHandler(m *nats.Msg) {
+	log.Printf("Received a message: %s", string(m.Data))
+}
 
 func main() {
 	app := app.App()
