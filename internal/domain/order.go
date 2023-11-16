@@ -1,5 +1,7 @@
 package domain
 
+import "context"
+
 type Order struct {
 	OrderUID          string   `json:"order_uid"`
 	TrackNumber       string   `json:"track_number"`
@@ -15,6 +17,11 @@ type Order struct {
 	SMID              int      `json:"sm_id"`
 	DateCreated       string   `json:"date_created"`
 	OOFShard          string   `json:"oof_shard"`
+}
+
+type OrderUsecase interface {
+	GetOrderByUID(ctx context.Context, uid string) (Order, error)
+	// CreateOrder() (uid string, err error) пока хз
 }
 
 type OrderRepository interface {
