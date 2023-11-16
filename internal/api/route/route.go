@@ -6,7 +6,7 @@ import (
 )
 
 func Setup(env *app.Env, db *app.Postgres, gin *gin.Engine) {
-	publicRouter := gin.Group("")
+	//publicRouter := gin.Group("")
 
-	NewMessageRouter(env, db, publicRouter)
+	//NewMessageRouter(env, db, publicRouter)
 }
