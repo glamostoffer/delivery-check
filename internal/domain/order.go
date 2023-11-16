@@ -16,3 +16,8 @@ type Order struct {
 	DateCreated       string   `json:"date_created"`
 	OOFShard          string   `json:"oof_shard"`
 }
+
+type OrderRepository interface {
+	Create(order *Order) error
+	GetByUID(uid string) (Order, error)
+}
