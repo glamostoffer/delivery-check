@@ -16,5 +16,5 @@ func NewOrderUsecase(repository domain.OrderRepository) domain.OrderUsecase {
 }
 
 func (ou *orderUsecase) GetOrderByUID(ctx context.Context, uid string) (domain.Order, error) {
-	return domain.Order{}, nil
+	return ou.orderRepository.GetByUID(uid)
 }
