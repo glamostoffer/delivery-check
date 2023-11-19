@@ -9,10 +9,10 @@ import (
 )
 
 type Postgres struct {
-	db *sql.DB
+	DB *sql.DB
 }
 
-func NewPostgresDatabase(env *Env) *Postgres {
+func NewPostgresDatabase(env *Env) Postgres {
 	db, err := sql.Open("postgres", fmt.Sprintf(
 		"postgresql://%s:%s@%s:%s/%s?sslmode=disable",
 		env.DBUser,
@@ -30,7 +30,7 @@ func NewPostgresDatabase(env *Env) *Postgres {
 		log.Fatal(err)
 	}
 
-	return &Postgres{db: db}
+	return Postgres{DB: db}
 }
 
 func (db *Postgres) ClosePostgresDBConnection() {
@@ -38,7 +38,7 @@ func (db *Postgres) ClosePostgresDBConnection() {
 		return
 	}
 
-	err := db.db.Close()
+	err := db.DB.Close()
 	if err != nil {
 		log.Fatal(err)
 	}

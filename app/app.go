@@ -2,7 +2,7 @@ package app
 
 type Application struct {
 	Env      *Env
-	Postgres *Postgres
+	Postgres Postgres
 }
 
 func App() Application {
