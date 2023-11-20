@@ -17,14 +17,9 @@ type OrderParams struct {
 }
 
 func (oc OrderController) GetOrderByUID(c *gin.Context) {
-	var params OrderParams
-	err := c.ShouldBindUri(&params)
-	if err != nil {
-		c.JSON(http.StatusBadRequest, domain.ErrorResponse{Message: err.Error()})
-		return
-	}
+	uid := c.Param("orderuid")
 
-	order, err := oc.OrderUsecase.GetOrderByUID(c, params.UID)
+	order, err := oc.OrderUsecase.GetOrderByUID(c, uid)
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
 		return

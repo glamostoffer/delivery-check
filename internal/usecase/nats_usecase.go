@@ -26,6 +26,7 @@ func (nu *natsUsecase) HandleMessage(m *nats.Msg) {
 	err := json.Unmarshal(m.Data, &order)
 	if err != nil {
 		log.Printf("error: %s", err.Error())
+		return
 	}
 
 	err = nu.orderRepository.Create(&order)

@@ -7,8 +7,8 @@ import (
 
 type Nats interface {
 	//Start(ctx context.Context)
-	Subscribe(channelName string) error
-	Publish(message []byte) error
+	Subscribe(channel string) error
+	Publish(channel, message string) error
 }
 
 type NatsUsecase interface {
@@ -27,8 +27,8 @@ func NewNatsBroker(conn natsconnector.NatsConnector, uc NatsUsecase) Nats {
 	}
 }
 
-func (nb *natsBroker) Subscribe(channelName string) error {
-	_, err := nb.connector.Client.Subscribe(channelName, nb.uc.HandleMessage)
+func (nb *natsBroker) Subscribe(channel string) error {
+	_, err := nb.connector.Client.Subscribe(channel, nb.uc.HandleMessage)
 	if err != nil {
 		return err
 	}
@@ -36,6 +36,8 @@ func (nb *natsBroker) Subscribe(channelName string) error {
 	return nil
 }
 
-func (nb *natsBroker) Publish(message []byte) error {
-	return nil
+func (nb *natsBroker) Publish(channel, message string) error {
+	err := nb.connector.Client.Publish(channel, []byte(message))
+
+	return err
 }

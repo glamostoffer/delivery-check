@@ -15,5 +15,5 @@ func NewOrderRoute(env *app.Env, db app.Postgres, group *gin.RouterGroup) {
 		Env:          env,
 	}
 
-	group.GET("/order", oc.GetOrderByUID)
+	group.GET("/order/:orderuid", oc.GetOrderByUID)
 }
