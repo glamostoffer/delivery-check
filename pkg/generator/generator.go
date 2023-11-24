@@ -16,7 +16,6 @@ func generateTimestampString() string {
 }
 
 func generateRandomString(length int) string {
-	rand.Seed(time.Now().UnixNano())
 	charset := "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789"
 	b := make([]byte, length)
 	for i := range b {
@@ -26,6 +25,7 @@ func generateRandomString(length int) string {
 }
 
 func GenerateRandomJSON() (string, error) {
+	rand.New(rand.NewSource(time.Now().UnixNano()))
 	delivery := domain.Delivery{
 		Name:    generateRandomString(10),
 		Phone:   generateRandomString(10),
