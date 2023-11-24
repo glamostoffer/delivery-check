@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Order Form</title>
+    <script>
+        function sendRequest() {
+            var uid = document.getElementById('uid').value;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', 'http://localhost:8080/order/' + uid, true);
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState === XMLHttpRequest.DONE) {
+                    if (xhr.status === 200) {
+                        var response = JSON.parse(xhr.responseText);
+                        document.getElementById('response').innerText = JSON.stringify(response, null, 2);
+                    } else {
+                        console.error('Request failed: ' + xhr.status);
+                    }
+                }
+            };
+            xhr.send();
+        }
+    </script>
+</head>
+<body>
+<form>
+    <label for="uid">UID:</label>
+    <input type="text" id="uid" name="uid">
+    <button type="button" onclick="sendRequest()">Отправить</button>
+</form>
+<pre id="response"></pre>
+</body>
+</html>

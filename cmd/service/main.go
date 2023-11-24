@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"log"
 	"time"
 
@@ -20,6 +21,18 @@ func startServer(app app.Application) {
 	env := app.Env
 
 	gin := gin.Default()
+
+	gin.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"http://localhost:63342"},
+		AllowMethods:     []string{"GET"},
+		AllowHeaders:     []string{"Origin"},
+		ExposeHeaders:    []string{"Access-Control-Allow-Origin"},
+		AllowCredentials: true,
+		AllowOriginFunc: func(origin string) bool {
+			return origin == "http://localhost:63342"
+		},
+		MaxAge: 12 * time.Hour,
+	}))
 
 	route.Setup(env, app.Postgres, gin)
 
