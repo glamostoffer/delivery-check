@@ -23,8 +23,3 @@ type OrderUsecase interface {
 	GetOrderByUID(ctx context.Context, uid string) (Order, error)
 	// CreateOrder() (uid string, err error) пока хз
 }
-
-type OrderRepository interface {
-	Create(order *Order) error
-	GetByUID(uid string) (Order, error)
-}

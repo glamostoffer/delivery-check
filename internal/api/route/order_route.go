@@ -1,11 +1,12 @@
 package route
 
 import (
+	"github.com/gin-gonic/gin"
+
 	"deliveryCheck/app"
 	"deliveryCheck/internal/api/controller"
 	"deliveryCheck/internal/repository"
 	"deliveryCheck/internal/usecase"
-	"github.com/gin-gonic/gin"
 )
 
 func NewOrderRoute(env *app.Env, db app.Postgres, group *gin.RouterGroup) {

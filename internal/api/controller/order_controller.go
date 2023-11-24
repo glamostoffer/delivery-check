@@ -1,10 +1,12 @@
 package controller
 
 import (
+	"net/http"
+
+	"github.com/gin-gonic/gin"
+
 	"deliveryCheck/app"
 	"deliveryCheck/internal/domain"
-	"github.com/gin-gonic/gin"
-	"net/http"
 )
 
 type OrderController struct {

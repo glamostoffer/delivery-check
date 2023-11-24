@@ -1,6 +1,12 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"time"
+
+	"github.com/gin-gonic/gin"
+
 	"deliveryCheck/app"
 	"deliveryCheck/internal/api/route"
 	br "deliveryCheck/internal/broker"
@@ -8,10 +14,6 @@ import (
 	"deliveryCheck/internal/usecase"
 	"deliveryCheck/pkg/generator"
 	"deliveryCheck/pkg/natsconnector"
-	"fmt"
-	"github.com/gin-gonic/gin"
-	"log"
-	"time"
 )
 
 func startServer(app app.Application) {

@@ -1,8 +1,9 @@
 package broker
 
 import (
-	"deliveryCheck/pkg/natsconnector"
 	"github.com/nats-io/nats.go"
+
+	"deliveryCheck/pkg/natsconnector"
 )
 
 type Nats interface {

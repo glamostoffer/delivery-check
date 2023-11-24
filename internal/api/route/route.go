@@ -1,8 +1,9 @@
 package route
 
 import (
-	"deliveryCheck/app"
 	"github.com/gin-gonic/gin"
+
+	"deliveryCheck/app"
 )
 
 func Setup(env *app.Env, db app.Postgres, gin *gin.Engine) {

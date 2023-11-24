@@ -6,10 +6,10 @@ import (
 )
 
 type orderUsecase struct {
-	orderRepository domain.OrderRepository
+	orderRepository OrderRepository
 }
 
-func NewOrderUsecase(repository domain.OrderRepository) domain.OrderUsecase {
+func NewOrderUsecase(repository OrderRepository) domain.OrderUsecase {
 	return &orderUsecase{
 		orderRepository: repository,
 	}
