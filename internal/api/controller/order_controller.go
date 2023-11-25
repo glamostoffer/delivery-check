@@ -1,7 +1,9 @@
 package controller
 
 import (
+	"deliveryCheck/internal/lru"
 	"net/http"
+	"time"
 
 	"github.com/gin-gonic/gin"
 
@@ -10,6 +12,7 @@ import (
 )
 
 type OrderController struct {
+	OrderCache   *lru.Cache
 	OrderUsecase domain.OrderUsecase
 	Env          *app.Env
 }
@@ -21,9 +24,15 @@ type OrderParams struct {
 func (oc OrderController) GetOrderByUID(c *gin.Context) {
 	uid := c.Param("orderuid")
 
-	order, err := oc.OrderUsecase.GetOrderByUID(c, uid)
-	if err != nil {
-		c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
+	order, found := oc.OrderCache.Get(uid)
+	if !found {
+		order, err := oc.OrderUsecase.GetOrderByUID(c, uid)
+		if err != nil {
+			c.JSON(http.StatusInternalServerError, domain.ErrorResponse{Message: err.Error()})
+			return
+		}
+		oc.OrderCache.Set(uid, order, 20*time.Second)
+		c.JSON(http.StatusOK, order)
 		return
 	}
 
