@@ -3,7 +3,6 @@ package repository
 import (
 	"deliveryCheck/app"
 	"deliveryCheck/internal/domain"
-	"deliveryCheck/internal/usecase"
 	"fmt"
 )
 
@@ -11,7 +10,7 @@ type orderRepository struct {
 	DB app.Postgres
 }
 
-func NewOrderRepository(db app.Postgres) usecase.OrderRepository {
+func NewOrderRepository(db app.Postgres) OrderRepository {
 	return &orderRepository{
 		DB: db,
 	}

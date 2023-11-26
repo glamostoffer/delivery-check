@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"deliveryCheck/internal/repository"
 	"encoding/json"
 	"log"
 
@@ -11,10 +12,10 @@ import (
 )
 
 type natsUsecase struct {
-	orderRepository OrderRepository
+	orderRepository repository.OrderRepository
 }
 
-func NewNatsUsecase(repository OrderRepository) broker.NatsUsecase {
+func NewNatsUsecase(repository repository.OrderRepository) broker.NatsUsecase {
 	return &natsUsecase{
 		orderRepository: repository,
 	}

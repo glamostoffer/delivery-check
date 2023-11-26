@@ -2,6 +2,7 @@ package controller
 
 import (
 	"deliveryCheck/internal/lru"
+	"deliveryCheck/internal/usecase"
 	"net/http"
 	"time"
 
@@ -13,7 +14,7 @@ import (
 
 type OrderController struct {
 	OrderCache   *lru.Cache
-	OrderUsecase domain.OrderUsecase
+	OrderUsecase usecase.OrderUsecase
 	Env          *app.Env
 }
 

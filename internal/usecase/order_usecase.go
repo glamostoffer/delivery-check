@@ -3,13 +3,14 @@ package usecase
 import (
 	"context"
 	"deliveryCheck/internal/domain"
+	"deliveryCheck/internal/repository"
 )
 
 type orderUsecase struct {
-	orderRepository OrderRepository
+	orderRepository repository.OrderRepository
 }
 
-func NewOrderUsecase(repository OrderRepository) domain.OrderUsecase {
+func NewOrderUsecase(repository repository.OrderRepository) OrderUsecase {
 	return &orderUsecase{
 		orderRepository: repository,
 	}
