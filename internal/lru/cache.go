@@ -5,7 +5,14 @@ import (
 	"time"
 )
 
-type Cache struct {
+//go:generate go run github.com/vektra/mockery/v2@latest --name=Cache
+
+type Cache interface {
+	Set(key string, value interface{}, duration time.Duration)
+	Get(key string) (interface{}, bool)
+}
+
+type MyCache struct {
 	sync.RWMutex
 	cleanupInterval time.Duration
 	items           map[string]Item
@@ -17,10 +24,10 @@ type Item struct {
 	Expiration int64
 }
 
-func New(cleanupInterval time.Duration) *Cache {
+func New(cleanupInterval time.Duration) Cache {
 	items := make(map[string]Item)
 
-	cache := Cache{
+	cache := MyCache{
 		items:           items,
 		cleanupInterval: cleanupInterval,
 	}
@@ -32,7 +39,7 @@ func New(cleanupInterval time.Duration) *Cache {
 	return &cache
 }
 
-func (c *Cache) Set(key string, value interface{}, duration time.Duration) {
+func (c *MyCache) Set(key string, value interface{}, duration time.Duration) {
 	var expiration int64
 
 	expiration = time.Now().Add(duration).UnixNano()
@@ -47,7 +54,7 @@ func (c *Cache) Set(key string, value interface{}, duration time.Duration) {
 	}
 }
 
-func (c *Cache) Get(key string) (interface{}, bool) {
+func (c *MyCache) Get(key string) (interface{}, bool) {
 
 	c.RLock()
 	defer c.RUnlock()
@@ -66,11 +73,11 @@ func (c *Cache) Get(key string) (interface{}, bool) {
 	return item.Value, true
 }
 
-func (c *Cache) StartGC() {
+func (c *MyCache) StartGC() {
 	go c.GC()
 }
 
-func (c *Cache) GC() {
+func (c *MyCache) GC() {
 	for {
 		<-time.After(c.cleanupInterval)
 
@@ -84,7 +91,7 @@ func (c *Cache) GC() {
 	}
 }
 
-func (c *Cache) expiredKeys() (keys []string) {
+func (c *MyCache) expiredKeys() (keys []string) {
 	c.RLock()
 	defer c.RUnlock()
 
@@ -97,7 +104,7 @@ func (c *Cache) expiredKeys() (keys []string) {
 	return
 }
 
-func (c *Cache) clearItems(keys []string) {
+func (c *MyCache) clearItems(keys []string) {
 	c.Lock()
 	defer c.Unlock()
 
